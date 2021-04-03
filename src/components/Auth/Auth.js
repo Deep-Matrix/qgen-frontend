@@ -89,18 +89,18 @@ export default function Auth() {
       }
       console.log('in register')
       let response= null
-    //   if(isLogin){
-    //     response = await  loginApi(data)
-    //     const token = response.data.token || 'NA'
-    //     console.log(token)
-    //     localStorage.setItem('token',token)
-    //   }
-    //   else{
-    //     response = await registerApi(data)
-    //   }
+      if(isLogin){
+        response = await  loginApi(data)
+        const token = response.data.token || 'NA'
+        console.log(token)
+        localStorage.setItem('token',token)
+      }
+      else{
+        response = await registerApi(data)
+      }
 
-    response = await secureRequest()
-    console.log(response)
+    // response = await secureRequest()
+    // console.log(response)
     alert(JSON.stringify(response))
   }
 

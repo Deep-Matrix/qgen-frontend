@@ -9,6 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EdiText from 'react-editext'
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import axios from 'axios';
 
 function Main() {
 
@@ -16,64 +17,93 @@ function Main() {
     const [selectedNote, setSelectedNote] = useState(null)
 
     const [addData, setVal] = useState("");
-    // const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
 
     useEffect(() => {
         //
-        function getNotes(){
-            // request here to get notes
-            const notes_array = [
-                {
-                    "id": 2,
-                    "note_title": "Dandan",
-                    "content": "Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary",
-                    "doc": "2021-04-03T10:35:57.136603Z",
-                    "user_id": 2
-                },
-                {
-                    "id": 3,
-                    "note_title": "Hey there this!",
-                    "content": "Mayank Chowdhary",
-                    "doc": "2021-04-03T10:35:57.136603Z",
-                    "user_id": 2
+        axios.post('http://localhost:8000/api/get_notes',
+            {
+                user_id : JSON.parse(localStorage.user)[0].id                                                        
+            }, 
+            {
+                headers:{
+                  'Authorization':''+localStorage.token,
                 }
-
-            ]
-
-            setNotes(notes_array)
-        }
-        getNotes()
+            })
+            .then(response =>{
+            setNotes(response.data.data);                
+            return ({status : 'Success' ,message:"Document has been delivered"})
+            })
+            .catch(err =>{
+            return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
+            });
     }, [])
 
-    function saveNote(){
+    async function saveNote() {
         console.log(addData)
         console.log(titleValue)
         console.log(selectedNote)
-        
-        let updated_notes_list = notes.map(n => {
+        let updated_note;
+        let updated_notes_list = notes.map(async (n) => {
             if(n.id == selectedNote.id){
+
                 // UPDATE IN DATABASE TOO
                 n.content = addData
                 n.note_title = titleValue
+                updated_note = n;
             }
             return n
         })
+        let n = updated_note;
+        let result = await axios.post(`http://localhost:8000/api/update_note`,
+                {
+                    note_id : n.id,
+                    note_title : n.note_title,
+                    note_content : n.content                                                        
+                }, 
+                {
+                    headers:{
+                      'Authorization':''+localStorage.token,
+                    }
+                })
+        result = await axios.post(`http://localhost:8000/api/get_notes`,
 
-        setNotes(updated_notes_list)
+            {
+                user_id : JSON.parse(localStorage.user)[0].id                                                        
+            }, 
+            {
+                headers:{
+                'Authorization':''+localStorage.token,
+                }
+            })
+        setNotes(result.data.data)
     }
 
-    function addNote(){
+    async function addNote(){
         // save data to db and get new note in return
+        let result = await axios.post(`http://localhost:8000/api/put_note`,
+                {
+                    user_id : JSON.parse(localStorage.user)[0].id,
+                    note_title : 'Dummy title',
+                    note_content : 'Enter your notes here :))'                                                       
+                }, 
+                {
+                    headers:{
+                      'Authorization':''+localStorage.token,
+                    }
+                })
+            result = await axios.post(`http://localhost:8000/api/get_notes`,
 
-        const new_note = {// received from database
-            "id": 4,
-            "note_title": 'Dummy title',
-            "content": 'Enter your notes here :))',
-            "doc": "2021-04-03T10:35:57.136603Z",
-            "user_id": 2
-        }
-        setNotes([new_note,...notes])
+            {
+                user_id : JSON.parse(localStorage.user)[0].id                                                        
+            }, 
+            {
+                headers:{
+                'Authorization':''+localStorage.token,
+                }
+            })
+        setNotes(result.data.data)
+
     }
 
    
