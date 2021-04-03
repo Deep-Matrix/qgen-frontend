@@ -1,0 +1,99 @@
+.cusmodal{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: rgba(0,0,0, .8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* opacity: 0; */
+    /* visibility: hidden; */
+    transition: all .3s;
+    box-sizing: border-box;
+}
+
+.cusmodal__main{
+    width: 80%;
+    /* height: 70vh; */
+    /* background-color: red; */
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cusmodal__left{
+    flex: .35;
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.cusmodal__right{
+    flex: .65;
+    height: inherit;
+    overflow-y: auto;
+    padding: 0 20px;
+    background-color: white;
+    position: relative;
+}
+
+.heading__primary{
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.heading__secondary{
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.cusmodal__form{
+    margin: 70px 30px;
+}
+
+.cusmodal__form small{
+    font-weight: 900;
+    color: darkgray;
+}
+
+.cusmodal__slider{
+    height: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.cusmodal__button-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cusmodal__button-container__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 1rem 1rem 0 0;
+    height: 2.5rem;
+    width: 8rem;
+    border-radius: 25px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .36s ease;
+    border: none;
+    outline: none;   
+}
+
+.cusmodal__button-container__button:hover{
+    transform: scale(1.05);
+}
+
+.cusmodal__submit{
+    display: flex;
+    justify-content: center;
+}

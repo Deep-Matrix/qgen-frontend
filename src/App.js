@@ -9,12 +9,16 @@ import {
 } from "react-router-dom";
 import Quiz from "./components/Quiz/Quiz";
 import Auth from "./components/Auth/Auth";
+import CustomModal from "./components/CustomModal/CustomModal";
 
 function App() {
   return (
     <div>
       <Router>
         <Switch>
+          <Route path="/modal">
+            <CustomModal />
+          </Route>
           <Route path="/quiz">
             <Quiz />
           </Route>
