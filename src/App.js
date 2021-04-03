@@ -7,13 +7,17 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Quiz from "./components/Quiz/Quiz";
 
 function App() {
   return (
     <div>
       <Router>
         <Switch>
-          <Route path="*">
+          <Route path="/quiz">
+            <Quiz />
+          </Route>
+          <Route path="/">
             <Main />
           </Route>
         </Switch>
