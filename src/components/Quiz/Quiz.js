@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import './Quiz.css'
+import CancelIcon from '@material-ui/icons/Cancel';
+import axios from 'axios';
 
-function Quiz() {
+function Quiz(props) {
 
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
-        //
-        function getQuestions(){
+        // Based on below data generate and retrieve question-answers from database
+        // props.showQuizPage => [selectedNote,noOfQuestions,fib,mcq,tf]
+        console.log(props.showQuizPage)
+
+        
+        async function getQuestions(){
             // request here
+            let result = await axios.post(`http://localhost:8000/api/get_questions`,
+                {
+                    note_id : props.showQuizPage[0].id,
+                    number_of_questions : props.showQuizPage[1],
+                    types_of_questions : [props.showQuizPage[2], props.showQuizPage[3], props.showQuizPage[4]]                                                       
+                }, 
+                {
+                    headers:{
+                      'Authorization':''+localStorage.token,
+                    }
+                })
             const questions_array =[
                 {
                     "id":"1",
@@ -139,7 +156,9 @@ function Quiz() {
             </div>
 
 
-
+            <div style={{position:"absolute",top:"10px",right:"10px"}}>
+                <CancelIcon style={{cursor:"pointer"}} onClick={() => props.setShowQuizPage(false)} fontSize="large"/>
+            </div>
 
             <div style={{
                 // boxShadow:"0 0 2 2 #000000"

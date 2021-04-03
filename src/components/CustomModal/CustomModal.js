@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./CustomModal.css";
 
-function CustomModal() {
+function CustomModal(props) {
 
   const [noOfQuestions, setNoOfQuestions] = useState(5)
   const [fib, setFib] = useState(false)
@@ -12,10 +12,8 @@ function CustomModal() {
   const [tf, setTf] = useState(false)
 
   function submitQuizForm(){
-    console.log(noOfQuestions)
-    console.log(fib)
-    console.log(mcq)
-    console.log(tf)
+    props.submitQuizForm(noOfQuestions,fib,mcq,tf)
+    props.setOpenQuizForm(false)
   }
 
   return (
@@ -29,9 +27,7 @@ function CustomModal() {
         </div>
         <div className="cusmodal__right">
             <div style={{position:"absolute",top:"10px",right:"10px"}}>
-              <Link to="/">
-                <CancelIcon fontSize="large"/>
-              </Link>
+                <CancelIcon style={{cursor:"pointer"}} onClick={() => props.setOpenQuizForm(false)} fontSize="large"/>
             </div>
             <div className="cusmodal__form">
                 <h3>Quiz length</h3>

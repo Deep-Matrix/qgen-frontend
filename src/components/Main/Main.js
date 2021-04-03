@@ -8,16 +8,47 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EdiText from 'react-editext'
 import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import axios from 'axios';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import CustomModal from '../CustomModal/CustomModal';
+import Quiz from '../Quiz/Quiz';
+
+const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
 
 function Main() {
 
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
-
     const [addData, setVal] = useState("");
     const [titleValue, settitleValue] = useState('Enter title')
+    // const [selectedFile, setSelectedFile] = useState(null);
+
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const [openQuizForm, setOpenQuizForm] = useState(false)
+    const [showQuizPage, setShowQuizPage] = useState([]) // [selectedNote,noOfQuestions,fib,mcq,tf]
 
     useEffect(() => {
         //
@@ -107,7 +138,6 @@ function Main() {
     }
 
    
-
     const handleChange = (e, editor) => {
         const data = editor.getData();
         setVal(data);
@@ -116,6 +146,53 @@ function Main() {
     const handleSave = (val) => {
         // console.log('Edited Value -> ', val)
         settitleValue(val)
+    }
+
+    const submitFileForm = (e) => {
+        const formData = new FormData();
+        formData.append("name", 'name');
+        formData.append("file", e.target.files[0]);
+        
+        console.log(formData)
+        
+        // Add form data here properly and access it by name of "file" in backend
+        axios
+            .post('http://localhost:8000/api/get_image_content', formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
+            .then((res) => {
+                alert("File Upload success");
+            })
+            .catch((err) => alert(JSON.stringify(err)));
+          
+    }
+    
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    function submitQuizForm(noOfQuestions,fib,mcq,tf){
+        // Number
+        console.log(noOfQuestions)
+        // true/false values
+        console.log(fib) 
+        console.log(mcq)
+        console.log(tf)
+
+        // using currently selected note and above variables generate list of questions
+        setShowQuizPage([selectedNote,noOfQuestions,fib,mcq,tf])
+
+    }
+    
+
+    if(openQuizForm){
+        return <CustomModal setOpenQuizForm={setOpenQuizForm} submitQuizForm={submitQuizForm} />
+    }
+    if(showQuizPage && showQuizPage.length > 0){
+        return <Quiz setShowQuizPage={setShowQuizPage} showQuizPage={showQuizPage} />
     }
    
     return (
@@ -130,7 +207,10 @@ function Main() {
                         MyCoolNotesApp
                     </div>
                     <IconButton aria-label="UploadIcon">
-                        <CloudUploadIcon />
+                        <form>
+                            <input onChange={(e) => submitFileForm(e)} style={{display:"none"}} id="myfile" type="file" name="myfile" />
+                            <label for="myfile"><CloudUploadIcon /></label>
+                        </form>
                     </IconButton>
                 </div>
 
@@ -171,6 +251,7 @@ function Main() {
                                     onClick={() => {
                                         setSelectedNote(data)
                                         setVal(data.content)
+                                        settitleValue(data.note_title)
                                     }}
                                     style={{
                                         position:"relative",
@@ -203,10 +284,40 @@ function Main() {
                     <div className="container">
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
-                    <Button variant="contained" color="primary" className="main__right__flashcard">
+                    <Button type="button" onClick={handleOpen} variant="contained" color="primary" className="main__right__flashcard">
                         Flashcards
                     </Button>
-                    <Button variant="contained" color="primary" className="main__right__quiz">
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <div className={classes.paper} style={ {borderRadius:"10px",  backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleClose} style={{position:"absolute", top:"100px", right:"100px"}}>
+                                    <CancelIcon fontSize="large" />
+                                </div>
+                                <h2 id="transition-modal-title">Flashcards</h2>
+                                <p id="transition-modal-description">The perfect flashes for your last minute revision</p>
+                                <br></br>
+                                <Card className="card__modal">
+                                    <CardContent>
+                                    Hii
+                                    Hii
+                                    Hii
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </Fade>
+                    </Modal>
+                    <Button onClick={() => setOpenQuizForm(true)} variant="contained" color="primary" className="main__right__quiz">
                         Quiz
                     </Button>
                     <Button variant="contained" color="primary" className="main__right__quiz">
