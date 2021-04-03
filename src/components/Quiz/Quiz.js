@@ -15,18 +15,18 @@ function Quiz(props) {
 
         
         async function getQuestions(){
-            // request here
-            // let result = await axios.post(`http://localhost:8000/api/get_questions`,
-            //     {
-            //         note_id : props.showQuizPage[0].id,
-            //         number_of_questions : props.showQuizPage[1],
-            //         types_of_questions : [props.showQuizPage[2], props.showQuizPage[3], props.showQuizPage[4]]                                                       
-            //     }, 
-            //     {
-            //         headers:{
-            //           'Authorization':''+localStorage.token,
-            //         }
-            //     })
+            request here
+            let result = await axios.post(`http://localhost:8000/api/get_questions`,
+                {
+                    note_id : props.showQuizPage[0].id,
+                    number_of_questions : props.showQuizPage[1],
+                    types_of_questions : [props.showQuizPage[2], props.showQuizPage[3], props.showQuizPage[4]]                                                       
+                }, 
+                {
+                    headers:{
+                      'Authorization':''+localStorage.token,
+                    }
+                })
             const questions_array =[
                 {
                     "id":"1",
@@ -193,7 +193,7 @@ function Quiz(props) {
                                     else{
                                         str_class = str_class + "quiz__option "
                                     }  
-                                    
+
                                     return <div className="quiz__option">
                                         <button 
                                             onClick={() => markAnswer(q,optn,j)}
