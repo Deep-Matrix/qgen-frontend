@@ -78,7 +78,6 @@ function Main() {
 
     return (
         <div className="main">
-
             <div className="main__left">
 
                 <div className="main__header">
@@ -137,7 +136,7 @@ function Main() {
             </div>
 
 
-            <div className="main__right">
+            <div className="main__right" >
                 
                 <div className="main__right__buttons">
                     <Button variant="contained" color="primary" className="main__right__flashcard">
