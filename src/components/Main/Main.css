@@ -111,3 +111,10 @@
 .line-breaker{
     margin: 4px 0;
 }
+
+.card__modal{
+    box-shadow: 0 0 5px 5px gray!important;
+    border-radius: 20px!important;
+    min-width: 250px!important;
+    min-height: 50px!important;
+}

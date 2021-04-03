@@ -3,6 +3,7 @@ import './Main.css'
 import MenuIcon from '@material-ui/icons/Menu';
 import { colors, IconButton, InputAdornment, Paper, TextField } from '@material-ui/core';
 import SearchIcon from "@material-ui/icons/Search";
+import CancelIcon from '@material-ui/icons/Cancel';
 import { Slate, Editable, withReact } from 'slate-react'
 import { createEditor, Transforms, Editor,Text } from 'slate'
 import {bold} from "react-icons-kit/feather/bold";
@@ -11,6 +12,14 @@ import Icon from 'react-icons-kit';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
 import Typography from '@material-ui/core/Typography';
 
 const CustomEditor = {
@@ -51,6 +60,20 @@ const CustomEditor = {
 
 };
 
+const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+
 
 function Main() {
     const editor = useMemo(() => withReact(createEditor()), [])
@@ -75,6 +98,16 @@ function Main() {
         return <Leaf {...props} />
     },[])
 
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className="main">
@@ -140,9 +173,40 @@ function Main() {
             <div className="main__right">
                 
                 <div className="main__right__buttons">
-                    <Button variant="contained" color="primary" className="main__right__flashcard">
+                    <Button variant="contained" type="button" onClick={handleOpen} color="primary" className="main__right__flashcard">
                         Flashcards
                     </Button>
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <div className={classes.paper} style={ {borderRadius:"10px",  backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleClose} style={{position:"absolute", top:"100px", right:"100px"}}>
+                                    <CancelIcon fontSize="large" />
+                                </div>
+                                <h2 id="transition-modal-title">Flashcards</h2>
+                                <p id="transition-modal-description">The perfect flashes for your last minute revision</p>
+                                <br></br>
+                                <Card className="card__modal">
+                                    <CardContent>
+                                    Hii
+                                    Hii
+                                    Hii
+                                    </CardContent>
+                                </Card>
+                                <div class="flashcards-progressbar"><div style="width: 8.33333%; height: 100%; background-color: rgb(80, 210, 194); border-radius: 10px; transition: all 0.3s ease 0s;"></div></div>
+                            </div>
+                        </Fade>
+                    </Modal>
                     <Button variant="contained" color="primary" className="main__right__quiz">
                         Quiz
                     </Button>
