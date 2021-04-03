@@ -8,19 +8,43 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EdiText from 'react-editext'
 import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import axios from 'axios';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
 
 function Main() {
 
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
-
     const [addData, setVal] = useState("");
     // const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
     const [selectedFile, setSelectedFile] = useState(null);
 
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         //
@@ -80,7 +104,6 @@ function Main() {
     }
 
    
-
     const handleChange = (e, editor) => {
         const data = editor.getData();
         setVal(data);
@@ -107,6 +130,14 @@ function Main() {
             .catch((err) => alert(JSON.stringify(err)));
           
     }
+    
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
    
     return (
         <div className="main">
@@ -196,9 +227,39 @@ function Main() {
                     <div className="container">
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
-                    <Button variant="contained" color="primary" className="main__right__flashcard">
+                    <Button type="button" onClick={handleOpen} variant="contained" color="primary" className="main__right__flashcard">
                         Flashcards
                     </Button>
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <div className={classes.paper} style={ {borderRadius:"10px",  backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleClose} style={{position:"absolute", top:"100px", right:"100px"}}>
+                                    <CancelIcon fontSize="large" />
+                                </div>
+                                <h2 id="transition-modal-title">Flashcards</h2>
+                                <p id="transition-modal-description">The perfect flashes for your last minute revision</p>
+                                <br></br>
+                                <Card className="card__modal">
+                                    <CardContent>
+                                    Hii
+                                    Hii
+                                    Hii
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </Fade>
+                    </Modal>
                     <Button variant="contained" color="primary" className="main__right__quiz">
                         Quiz
                     </Button>
