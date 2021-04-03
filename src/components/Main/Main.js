@@ -1,13 +1,21 @@
-import React, { useEffect,useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './Main.css'
 import MenuIcon from '@material-ui/icons/Menu';
-import { colors, IconButton, InputAdornment, Paper, TextField } from '@material-ui/core';
+import { IconButton, InputAdornment, TextField } from '@material-ui/core';
 import SearchIcon from "@material-ui/icons/Search";
+import Button from '@material-ui/core/Button';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import EdiText from 'react-editext'
 
 function Main() {
 
     const [notes, setNotes] = useState([])
     const [selectedNote, setSelectedNote] = useState(null)
+
+    const [addData, setVal] = useState("");
+    const [addedData, showData] = useState(0);
+    const [titleValue, settitleValue] = useState('Enter title')
 
     useEffect(() => {
         //
@@ -36,9 +44,20 @@ function Main() {
         getNotes()
     }, [])
 
+   
+
+    const handleChange = (e, editor) => {
+        const data = editor.getData();
+        setVal(data);
+    }
+
+    const handleSave = (val) => {
+        // console.log('Edited Value -> ', val)
+        settitleValue(val)
+    }
+   
     return (
         <div className="main">
-
             <div className="main__left">
 
                 <div className="main__header">
@@ -105,12 +124,32 @@ function Main() {
             </div>
 
 
+            <div className="main__right" >
+                
+                <div className="main__right__buttons">
+                    <Button variant="contained" color="primary" className="main__right__flashcard">
+                        Flashcards
+                    </Button>
+                    <div className="container">
+                        <EdiText type="text" value={titleValue} onSave={handleSave} />
+                    </div>
+                    <Button variant="contained" color="primary" className="main__right__quiz">
+                        Quiz
+                    </Button>
+                </div>  
 
+                <div >
+                <CKEditor
+                    editor={ ClassicEditor } data={addData} onChange={handleChange}
+                    style={{minHeight:"800px"}} 
+                    />
+                </div>  
 
-            <div className="main__right">2</div>
+            </div>
             
         </div>
     )
 }
+
 
 export default Main

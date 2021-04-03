@@ -7,10 +7,38 @@
 .main__left{
     flex: 0.3;
     height: 1000px;
+    border-right: 1px solid rgb(211, 199, 199);
 }
 
 .main__right{
     flex: 0.7;
+    margin-left: 2%;
+    margin-top: 1%;
+}
+
+.ck-editor__editable {
+    min-height: 90vh !important;
+    border: none !important;
+}
+
+.ck-toolbar {
+    background-color: black;
+    border: none !important;
+}
+
+.ck-editor {
+    background-color: black;
+}
+
+.main__right__toolbar{
+    margin-bottom: 2%;
+}
+
+.main__right__buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5%;
 }
 
 .main__header{
