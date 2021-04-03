@@ -14,13 +14,13 @@ function Main() {
     const [selectedNote, setSelectedNote] = useState(null)
 
     const [addData, setVal] = useState("");
-    const [addedData, showData] = useState(0);
+    // const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
 
     useEffect(() => {
         //
         function getNotes(){
-            // request here
+            // request here to get notes
             const notes_array = [
                 {
                     "id": 2,
@@ -43,6 +43,36 @@ function Main() {
         }
         getNotes()
     }, [])
+
+    function saveNote(){
+        console.log(addData)
+        console.log(titleValue)
+        console.log(selectedNote)
+        
+        let updated_notes_list = notes.map(n => {
+            if(n.id == selectedNote.id){
+                // UPDATE IN DATABASE TOO
+                n.content = addData
+                n.note_title = titleValue
+            }
+            return n
+        })
+
+        setNotes(updated_notes_list)
+    }
+
+    function addNote(){
+        // save data to db and get new note in return
+
+        const new_note = {// received from database
+            "id": 4,
+            "note_title": 'Dummy title',
+            "content": 'Enter your notes here :))',
+            "doc": "2021-04-03T10:35:57.136603Z",
+            "user_id": 2
+        }
+        setNotes([new_note,...notes])
+    }
 
    
 
@@ -92,7 +122,9 @@ function Main() {
                     <h2 style={{
                         marginLeft:"10px",
                         color:"var(--color-primary)"
-                    }}>4 notes</h2>
+                    }}>
+                        {notes.length} notes
+                </h2>
                 </div>
                 
 
@@ -101,7 +133,10 @@ function Main() {
 
                     {notes.map(data => {
                         return <div 
-                                    onClick={() => setSelectedNote(data)}
+                                    onClick={() => {
+                                        setSelectedNote(data)
+                                        setVal(data.content)
+                                    }}
                                     style={{
                                         position:"relative",
                                         backgroundColor:selectedNote && selectedNote.id == data.id ? "var(--color-primary)" : null
@@ -138,7 +173,17 @@ function Main() {
                     </Button>
                 </div>  
 
-                <div >
+                <div style={{ position:"relative"  }}>
+                
+                <div style={{display:"flex",justifyContent:"space-between"}}>
+                    <Button onClick={addNote} variant="contained" color="primary">
+                        +
+                    </Button>
+                    <Button onClick={saveNote} variant="contained" color="primary">
+                        SAVE
+                    </Button>
+                </div>
+
                 <CKEditor
                     editor={ ClassicEditor } data={addData} onChange={handleChange}
                     style={{minHeight:"800px"}} 
