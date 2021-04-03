@@ -40,7 +40,7 @@ function Main() {
 
                 <div>
                     <h2 style={{
-                        marginLeft:"20px",
+                        marginLeft:"10px",
                         color:"var(--color-primary)"
                     }}>4 notes</h2>
                 </div>
@@ -50,15 +50,15 @@ function Main() {
                 <div className="main__list">
 
                     {[1,2,3,4,5,6,7].map(data => {
-                        return <>
-                            <div className="main__list-item" >
+                        return <div style={{position:"relative"}}>
+                            <div className="main__list-item main__item__selected" >
                                 <div className="main__item-content">
                                     <h3>Hey there</h3>
                                     <p class="main__item-content-sub">Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes </p>
                                 </div>
                             </div>
                             <hr className="line-breaker"></hr>
-                        </>
+                        </div>
                     })}
 
                 </div>

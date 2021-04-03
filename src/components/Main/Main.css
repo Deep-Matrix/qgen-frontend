@@ -60,7 +60,13 @@
 .main__list-item{
     width: 95%;
     height: 100px;
-    overflow: hidden;
+    /* overflow: hidden; */
+}
+
+.main__list-item:hover{
+    width: 100%;
+    background-color: rgba(168, 131, 131, 0.1);
+    cursor: pointer;
 }
 
 .main__item-content{
@@ -71,6 +77,22 @@
     margin-top: 5px;
     font-size: small;
     color: gray;
+}
+
+.main__item__selected::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--color-primary);
+    transform: scaleY(0);
+    transition: all 0.2s;
+}
+
+.main__item__selected:hover::before{
+    transform: scaleY(1);
 }
 
 .line-breaker{
