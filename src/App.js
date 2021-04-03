@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Auth from "./components/Auth/Auth";
+import Main from "./components/Main/Main";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,8 +13,8 @@ function App() {
     <div>
       <Router>
         <Switch>
-          <Route path="/auth">
-            <Auth />
+          <Route path="*">
+            <Main />
           </Route>
         </Switch>
       </Router>
