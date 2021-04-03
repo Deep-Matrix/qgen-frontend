@@ -15,7 +15,7 @@ function Quiz(props) {
 
         
         async function getQuestions(){
-            request here
+            // request here
             let result = await axios.post(`http://localhost:8000/api/get_questions`,
                 {
                     note_id : props.showQuizPage[0].id,
