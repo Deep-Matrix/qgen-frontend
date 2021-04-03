@@ -19,6 +19,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import CustomModal from '../CustomModal/CustomModal';
+import Quiz from '../Quiz/Quiz';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -45,6 +47,9 @@ function Main() {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+
+    const [openQuizForm, setOpenQuizForm] = useState(false)
+    const [showQuizPage, setShowQuizPage] = useState([]) // [selectedNote,noOfQuestions,fib,mcq,tf]
 
     useEffect(() => {
         //
@@ -138,6 +143,28 @@ function Main() {
     const handleClose = () => {
         setOpen(false);
     };
+
+
+    function submitQuizForm(noOfQuestions,fib,mcq,tf){
+        // Number
+        console.log(noOfQuestions)
+        // true/false values
+        console.log(fib) 
+        console.log(mcq)
+        console.log(tf)
+
+        // using currently selected note and above variables generate list of questions
+        setShowQuizPage([selectedNote,noOfQuestions,fib,mcq,tf])
+
+    }
+    
+
+    if(openQuizForm){
+        return <CustomModal setOpenQuizForm={setOpenQuizForm} submitQuizForm={submitQuizForm} />
+    }
+    if(showQuizPage && showQuizPage.length > 0){
+        return <Quiz setShowQuizPage={setShowQuizPage} showQuizPage={showQuizPage} />
+    }
    
     return (
         <div className="main">
@@ -260,7 +287,7 @@ function Main() {
                             </div>
                         </Fade>
                     </Modal>
-                    <Button variant="contained" color="primary" className="main__right__quiz">
+                    <Button onClick={() => setOpenQuizForm(true)} variant="contained" color="primary" className="main__right__quiz">
                         Quiz
                     </Button>
                     <Button variant="contained" color="primary" className="main__right__quiz">
