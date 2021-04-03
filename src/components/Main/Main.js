@@ -43,7 +43,7 @@ function Main() {
     const [addData, setVal] = useState("");
     // const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
-    const [selectedFile, setSelectedFile] = useState(null);
+    // const [selectedFile, setSelectedFile] = useState(null);
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -222,6 +222,7 @@ function Main() {
                                     onClick={() => {
                                         setSelectedNote(data)
                                         setVal(data.content)
+                                        settitleValue(data.note_title)
                                     }}
                                     style={{
                                         position:"relative",
