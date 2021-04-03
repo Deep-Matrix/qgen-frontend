@@ -16,6 +16,20 @@
     margin-top: 1%;
 }
 
+.ck-editor__editable {
+    min-height: 90vh !important;
+    border: none !important;
+}
+
+.ck-toolbar {
+    background-color: black;
+    border: none !important;
+}
+
+.ck-editor {
+    background-color: black;
+}
+
 .main__right__toolbar{
     margin-bottom: 2%;
 }
@@ -73,7 +87,7 @@
 .main__list-item{
     width: 95%;
     height: 100px;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .main__list-item:hover{
@@ -85,6 +99,7 @@
 .main__item-content{
     margin: 10px 10px;
 }
+
 
 .main__item-content-sub{
     margin-top: 5px;
