@@ -8,6 +8,7 @@ import {
   Link
 } from "react-router-dom";
 import Quiz from "./components/Quiz/Quiz";
+import Auth from "./components/Auth/Auth";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <Switch>
           <Route path="/quiz">
             <Quiz />
+          </Route>
+          <Route path="/auth">
+            <Auth />
           </Route>
           <Route path="/">
             <Main />

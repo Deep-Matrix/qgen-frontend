@@ -59,7 +59,7 @@
 .main__list-item{
     width: 95%;
     height: 100px;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .main__list-item:hover{

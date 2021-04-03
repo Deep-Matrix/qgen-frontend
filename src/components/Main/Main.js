@@ -1,10 +1,41 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import './Main.css'
 import MenuIcon from '@material-ui/icons/Menu';
 import { colors, IconButton, InputAdornment, Paper, TextField } from '@material-ui/core';
 import SearchIcon from "@material-ui/icons/Search";
 
 function Main() {
+
+    const [notes, setNotes] = useState([])
+    const [selectedNote, setSelectedNote] = useState(null)
+
+    useEffect(() => {
+        //
+        function getNotes(){
+            // request here
+            const notes_array = [
+                {
+                    "id": 2,
+                    "note_title": "Dandan",
+                    "content": "Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary",
+                    "doc": "2021-04-03T10:35:57.136603Z",
+                    "user_id": 2
+                },
+                {
+                    "id": 3,
+                    "note_title": "Hey there this!",
+                    "content": "Mayank Chowdhary",
+                    "doc": "2021-04-03T10:35:57.136603Z",
+                    "user_id": 2
+                }
+
+            ]
+
+            setNotes(notes_array)
+        }
+        getNotes()
+    }, [])
+
     return (
         <div className="main">
 
@@ -49,12 +80,20 @@ function Main() {
                 {/* List */}
                 <div className="main__list">
 
-                    {[1,2,3,4,5,6,7].map(data => {
-                        return <div style={{position:"relative"}}>
+                    {notes.map(data => {
+                        return <div 
+                                    onClick={() => setSelectedNote(data)}
+                                    style={{
+                                        position:"relative",
+                                        backgroundColor:selectedNote && selectedNote.id == data.id ? "var(--color-primary)" : null
+                                    }}
+                                >
                             <div className="main__list-item main__item__selected" >
                                 <div className="main__item-content">
-                                    <h3>Hey there</h3>
-                                    <p class="main__item-content-sub">Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes </p>
+                                    <h3>{data.note_title}</h3>
+                                    <p class="main__item-content-sub">
+                                        {data.content}
+                                    </p>
                                 </div>
                             </div>
                             <hr className="line-breaker"></hr>
@@ -64,9 +103,6 @@ function Main() {
                 </div>
 
             </div>
-
-
-
 
 
 
