@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EdiText from 'react-editext'
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 function Main() {
     const[addData, setVal] = useState("");
@@ -34,6 +36,9 @@ function Main() {
                     <div className="main__header__title">
                         MyCoolNotesApp
                     </div>
+                    <IconButton aria-label="UploadIcon">
+                        <CloudUploadIcon />
+                    </IconButton>
                 </div>
 
                 <div className="main__searchBar">
@@ -86,14 +91,20 @@ function Main() {
             <div className="main__right" >
                 
                 <div className="main__right__buttons">
-                    <Button variant="contained" color="primary" className="main__right__flashcard">
-                        Flashcards
-                    </Button>
+                    <IconButton aria-label="delete">
+                        <DeleteIcon />
+                    </IconButton>
                     <div className="container">
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
+                    <Button variant="contained" color="primary" className="main__right__flashcard">
+                        Flashcards
+                    </Button>
                     <Button variant="contained" color="primary" className="main__right__quiz">
                         Quiz
+                    </Button>
+                    <Button variant="contained" color="primary" className="main__right__quiz">
+                        Summarize
                     </Button>
                 </div>  
 
