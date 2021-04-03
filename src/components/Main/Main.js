@@ -11,9 +11,42 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 function Main() {
-    const[addData, setVal] = useState("");
-    const[addedData, showData] = useState(0);
+
+    const [notes, setNotes] = useState([])
+    const [selectedNote, setSelectedNote] = useState(null)
+
+    const [addData, setVal] = useState("");
+    const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
+
+    useEffect(() => {
+        //
+        function getNotes(){
+            // request here
+            const notes_array = [
+                {
+                    "id": 2,
+                    "note_title": "Dandan",
+                    "content": "Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary Mayank Chowdhary",
+                    "doc": "2021-04-03T10:35:57.136603Z",
+                    "user_id": 2
+                },
+                {
+                    "id": 3,
+                    "note_title": "Hey there this!",
+                    "content": "Mayank Chowdhary",
+                    "doc": "2021-04-03T10:35:57.136603Z",
+                    "user_id": 2
+                }
+
+            ]
+
+            setNotes(notes_array)
+        }
+        getNotes()
+    }, [])
+
+   
 
     const handleChange = (e, editor) => {
         const data = editor.getData();
@@ -71,12 +104,20 @@ function Main() {
                 {/* List */}
                 <div className="main__list">
 
-                    {[1,2,3,4,5,6,7].map(data => {
-                        return <div style={{position:"relative"}}>
+                    {notes.map(data => {
+                        return <div 
+                                    onClick={() => setSelectedNote(data)}
+                                    style={{
+                                        position:"relative",
+                                        backgroundColor:selectedNote && selectedNote.id == data.id ? "var(--color-primary)" : null
+                                    }}
+                                >
                             <div className="main__list-item main__item__selected" >
                                 <div className="main__item-content">
-                                    <h3>Hey there</h3>
-                                    <p class="main__item-content-sub">Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes here Content goes </p>
+                                    <h3>{data.note_title}</h3>
+                                    <p class="main__item-content-sub">
+                                        {data.content}
+                                    </p>
                                 </div>
                             </div>
                             <hr className="line-breaker"></hr>

@@ -35,6 +35,38 @@ function Quiz() {
                     "type":"mcq"
                 },
                 {
+                    "id":"671",
+                    "question":"njwe  wemnjcwhe jwn ncwe jwenbj mwe n ewjd njwe  wemnjcwhe jwn ncwe",
+                    "options":["asasxcas","3knej3","sank","sdcsdcs"],
+                    "correct_answer":"asasxcas",
+                    "marked_answer":-1,
+                    "type":"mcq"
+                },
+                {
+                    "id":"11",
+                    "question":"jwenbj mwe n ewjd njwe  wemnjcwhe jwn ncwe",
+                    "options":["asasxcas","3knej3","sank","sdcsdcs"],
+                    "correct_answer":"sdcsdcs",
+                    "marked_answer":-1,
+                    "type":"mcq",
+                },
+                {
+                    "id":"291",
+                    "question":"njwe  wemnjcwhe jwn ncwe jwenbj mwe n ewjd njwe  wemnjcwhe jwn ncwe",
+                    "options":["asasxcas","3knej3","sank","sdcsdcs"],
+                    "correct_answer":"sank",
+                    "marked_answer":-1,
+                    "type":"mcq"
+                },
+                {
+                    "id":"901",
+                    "question":"jwenbj mwe n ewjd njwe  wemnjcwhe jwn ncwe",
+                    "options":["asasxcas","3knej3","sank","sdcsdcs"],
+                    "correct_answer":"3knej3",
+                    "marked_answer":-1,
+                    "type":"mcq"
+                },
+                {
                     "id":"67",
                     "question":"njwe  wemnjcwhe jwn ncwe jwenbj mwe n ewjd njwe  wemnjcwhe jwn ncwe",
                     "options":["asasxcas","3knej3","sank","sdcsdcs"],
@@ -78,7 +110,7 @@ function Quiz() {
         <div className="main">
 
             <div className="main__left">
-                <div style={{position:"fixed",margin:"20px 10px"}}>
+                <div style={{margin:"20px 10px"}}>
                     <div className="header-primary">
                         Assignment Navigation
                     </div>
