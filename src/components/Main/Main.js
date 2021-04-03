@@ -9,6 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EdiText from 'react-editext'
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import axios from 'axios';
 
 function Main() {
 
@@ -18,6 +19,8 @@ function Main() {
     const [addData, setVal] = useState("");
     // const [addedData, showData] = useState(0);
     const [titleValue, settitleValue] = useState('Enter title')
+    const [selectedFile, setSelectedFile] = useState(null);
+
 
     useEffect(() => {
         //
@@ -87,6 +90,23 @@ function Main() {
         // console.log('Edited Value -> ', val)
         settitleValue(val)
     }
+
+    const submitFileForm = (e) => {
+        const formData = new FormData();
+        formData.append("name", 'name');
+        formData.append("file", e.target.files[0]);
+        
+        console.log(formData)
+        
+        // Add form data here properly and access it by name of "file" in backend
+        axios
+            .post('UPLOAD_URL', formData)
+            .then((res) => {
+                alert("File Upload success");
+            })
+            .catch((err) => alert(JSON.stringify(err)));
+          
+    }
    
     return (
         <div className="main">
@@ -100,7 +120,10 @@ function Main() {
                         MyCoolNotesApp
                     </div>
                     <IconButton aria-label="UploadIcon">
-                        <CloudUploadIcon />
+                        <form>
+                            <input onChange={(e) => submitFileForm(e)} style={{display:"none"}} id="myfile" type="file" name="myfile" />
+                            <label for="myfile"><CloudUploadIcon /></label>
+                        </form>
                     </IconButton>
                 </div>
 
