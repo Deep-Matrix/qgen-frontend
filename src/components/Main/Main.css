@@ -16,6 +16,20 @@
     margin-top: 1%;
 }
 
+.ck-editor__editable {
+    min-height: 90vh !important;
+    border: none !important;
+}
+
+.ck-toolbar {
+    background-color: black;
+    border: none !important;
+}
+
+.ck-editor {
+    background-color: black;
+}
+
 .main__right__toolbar{
     margin-bottom: 2%;
 }
