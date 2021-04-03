@@ -67,9 +67,18 @@ body {
   margin: 0px;
 }
 
+.header-primary{
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.header-secondary{
+  font-size: 20px;
+  font-weight: 600;
+}
+
 
 html{
   box-sizing: border-box;   
 }
-
 
