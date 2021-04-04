@@ -22,6 +22,8 @@ import Fade from '@material-ui/core/Fade';
 import CustomModal from '../CustomModal/CustomModal';
 import Quiz from '../Quiz/Quiz';
 
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 const useStyles = makeStyles((theme) => ({
     modal: {
       display: 'flex',
@@ -255,9 +257,7 @@ function Main() {
                     <div className="container">
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
-                    <Button type="button" onClick={handleOpen} variant="contained" color="primary" className="main__right__flashcard">
-                        Flashcards
-                    </Button>
+                    
                     <Modal
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
@@ -288,23 +288,45 @@ function Main() {
                             </div>
                         </Fade>
                     </Modal>
-                    <Button onClick={() => setOpenQuizForm(true)} variant="contained" color="primary" className="main__right__quiz">
-                        Quiz
-                    </Button>
-                    <Button variant="contained" color="primary" className="main__right__quiz">
-                        Summarize
-                    </Button>
+                    
+                    <div>
+                        <Button 
+                            className="main__header__btn" 
+                            style={{backgroundColor: "var(--color-primary)",margin:"5px",color:"white"}}
+                            type="button" onClick={handleOpen}>
+                            Flashcards
+                        </Button>
+                        <Button 
+                            className="main__header__btn" 
+                            style={{backgroundColor: "var(--color-primary)",margin:"5px",color:"white"}}
+                            onClick={() => setOpenQuizForm(true)}>
+                            Quiz
+                        </Button>
+                        <Button
+                            className="main__header__btn" 
+                            style={{backgroundColor: "var(--color-primary)",margin:"5px",color:"white"}}
+                        >
+                            Summarize
+                        </Button>
+                    </div>
                 </div>  
 
                 <div style={{ position:"relative"  }}>
                 
                 <div style={{display:"flex",justifyContent:"space-between"}}>
-                    <Button onClick={addNote} variant="contained" color="primary">
-                        +
-                    </Button>
-                    <Button onClick={saveNote} variant="contained" color="primary">
+                    <div>
+                        <AddCircleIcon
+                            style={{fontSize:"32px",cursor:"pointer"}}
+                            onClick={addNote}>        
+                        </AddCircleIcon>
+                        
+                    </div>
+                    <button 
+                        className="main__header__btn" 
+                        style={{backgroundColor: "burlywood"}}
+                        onClick={saveNote}>
                         SAVE
-                    </Button>
+                    </button>
                 </div>
 
                 <CKEditor
