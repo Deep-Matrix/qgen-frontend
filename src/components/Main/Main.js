@@ -58,7 +58,11 @@ function Main() {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [summaryOpen, setSummaryOpen] = useState(false)
+    const [summaryContent, setSummaryContent] = useState('')
+
     const [cards, setCards] = React.useState([]);
+    const [questionsFetached, setQuestionsFetached] = useState([])
   
 
     const [openQuizForm, setOpenQuizForm] = useState(false)
@@ -247,13 +251,26 @@ function Main() {
         console.log(formData)
         
         // Add form data here properly and access it by name of "file" in backend
+        console.log('ocr called')
         axios
             .post(`${CLIENT_URL}/api/get_image_content`, formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
             .then((res) => {
-                alert("File Upload success");
+                // return Response({'Message':"recieved all questions", 'data': questions},status=status.HTTP_200_OK)
+                alert(JSON.stringify(res.data))
+
+                setQuestionsFetached(res.data.data)
+                // submitQuizForm(res.data.data.length,false,true,true)
             })
             .catch((err) => alert(JSON.stringify(err)));
           
+    }
+
+
+    const generateSummary = () => {
+        // send axios req here
+        const summaryResponse = 'akjsd amwend  ndend we dwne dnwe nwe dwnb ed wn ednwb efn be fwebf'
+        setSummaryOpen(true)
+        setSummaryContent(summaryResponse)
     }
     
     const handleOpen = () => {
@@ -263,6 +280,15 @@ function Main() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleSummaryOpen = () => {
+        setSummaryOpen(true);
+    };
+
+    const handleSummaryClose = () => {
+        setSummaryOpen(false);
+    };
+
 
 
     function submitQuizForm(noOfQuestions,fib,mcq,tf){
@@ -282,8 +308,8 @@ function Main() {
     if(openQuizForm){
         return <CustomModal setOpenQuizForm={setOpenQuizForm} submitQuizForm={submitQuizForm} />
     }
-    if(showQuizPage && showQuizPage.length > 0){
-        return <Quiz setShowQuizPage={setShowQuizPage} showQuizPage={showQuizPage} />
+    if((showQuizPage && showQuizPage.length > 0) || (questionsFetached && questionsFetached.length > 0)){
+        return <Quiz questionsFetached={questionsFetached} setShowQuizPage={setShowQuizPage} showQuizPage={showQuizPage} />
     }
    
     return (
@@ -415,13 +441,46 @@ function Main() {
                                         <br></br>
                                     </div>}
                                    )}
-                                   {/* <div className={classes.root} style={{textAlign:"center"}}>
-                                            <Pagination count={pages.length} color="primary" page={1} onChange={handleChangeforPage} />
-                                    </div> */}
                                 </div>
                             </div>
                         </Fade>
                     </Modal>
+
+
+
+                    {/* summary */}
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={summaryOpen}
+                        onClose={handleSummaryClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={summaryOpen}>
+                            <div className={classes.paper} style={ {borderRadius:"20px", width:"600px",overflowY:"auto",height:"50%", backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleSummaryClose} style={{float:"right", top:"10px", right:"10px",cursor:"pointer"}}>
+                                    <CancelIcon fontSize="large" />
+                                </div>
+                                <br></br>
+                                <h1 id="transition-modal-title">Summary</h1>
+                                <p id="transition-modal-description">Gist of your notes for easy learning</p>
+                                <br></br>
+                                <br></br>
+                                <div className="card__container">
+                                {summaryContent} 
+                                </div>
+                            </div>
+                        </Fade>
+                    </Modal>
+
+
+
+
                     
                     <div style={{width:"100%",display:"flex",justifyContent:"flex-end"}}>
                         <div>
@@ -440,6 +499,7 @@ function Main() {
                         <Button
                             className="main__header__btn" 
                             style={{backgroundColor: "var(--color-primary)",margin:"5px",color:"white"}}
+                            onClick={() => generateSummary()}
                         >
                             Summarize
                         </Button>
