@@ -58,7 +58,7 @@ function Main() {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [pages, setCards] = React.useState([]);
+    const [cards, setCards] = React.useState([]);
   
 
     const [openQuizForm, setOpenQuizForm] = useState(false)
@@ -83,27 +83,55 @@ function Main() {
             return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
             });
 
+            function getFlashCards(){
+                // request here to get cards
+                const card_array = [
+                    {
+                        "antonyms": [
+                            "fail",
+                            "reject",
+                            "disapprove",
+                            "pass"
+                        ],
+                        "meaning": {
+                            "Noun": [
+                                "someone chosen to judge and decide a disputed issue"
+                            ]
+                        },
+                        "synonyms": [
+                            "arbiter",
+                            "judge",
+                            "third party",
+                            "evaluator"
+                        ],
+                        "word": "arbitrators"
+                    },
+                    {
+                        "antonyms": [
+                            "civilian",
+                            "nonworker"
+                        ],
+                        "meaning": {
+                            "Noun": [
+                                "a person responsible for the editorial aspects of publication; the person who determines the final content of a text (especially of a newspaper or magazine",
+                                "(computer science"
+                            ]
+                        },
+                        "synonyms": [
+                            "skilled workman",
+                            "text editor",
+                            "reviser",
+                            "skilled worker"
+                        ],
+                        "word": "editors"
+                    }]
+            
+                setCards(card_array)
+            }
+            getFlashCards()
         }, [])
         // getNotes()
 
-        // function getFlashCards(){
-        //     // request here to get cards
-        //     const card_array = [
-        //         {
-        //             "page_index":1,
-        //             "word":"Mechanics",
-        //             "meaning":"Study of physicd Study of physicd Study of physicd Study of physicd Study of physicd"
-        //         },
-        //         {
-        //             "page_index":2,
-        //             "word":"Software",
-        //             "meaning":"Study of Computer"
-        //         }
-        //     ]
-        
-        //     setCards(card_array)
-        // }
-        // getFlashCards()
         // if(fetched_notes.length > 0){
         //     setSelectedNote(notes[0])
         //     setVal(notes[0].content)
@@ -340,8 +368,8 @@ function Main() {
                         }}
                     >
                         <Fade in={open}>
-                            <div className={classes.paper} style={ {borderRadius:"20px", minWidth:"400px", maxWidth:"400px", backgroundColor:"white", overflow:"hidden" }} >
-                                <div onClick={handleClose} style={{float:"right", top:"10px", right:"10px"}}>
+                            <div className={classes.paper} style={ {borderRadius:"20px", width:"600px",overflowY:"auto",height:"50%", backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleClose} style={{float:"right", top:"10px", right:"10px",cursor:"pointer"}}>
                                     <CancelIcon fontSize="large" />
                                 </div>
                                 <br></br>
@@ -350,27 +378,35 @@ function Main() {
                                 <br></br>
                                 <br></br>
                                 <div className="card__container">
-                                    {pages.map(data => {
+                                    {cards.map(data => {
                                         return <div>
                                         <Card className="card__modal">
                                             <CardContent>
-                                            <h3 >{ data.word }</h3>
-                                            <br></br>
-                                            { data.meaning }
+                                                <h3 style={{ color:"",fontSize:"30px" }}>{ data.word }</h3>
+                                                <br></br>
+                                                <p style={{fontWeight:"bold"}}>Meaning</p>
+                                                { JSON.stringify(data.meaning) }
+                                                <br></br><br></br>
+                                                <p style={{fontWeight:"bold"}}>Synonymns</p>
+                                                { JSON.stringify(data.synonyms) }
+                                                <br></br><br></br>
+                                                <p style={{fontWeight:"bold"}}>Antonyms</p>
+                                                { JSON.stringify(data.antonyms) }
                                             </CardContent>
                                         </Card>
                                         <br></br>
                                     </div>}
                                    )}
-                                   <div className={classes.root} style={{textAlign:"center"}}>
+                                   {/* <div className={classes.root} style={{textAlign:"center"}}>
                                             <Pagination count={pages.length} color="primary" page={1} onChange={handleChangeforPage} />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </Fade>
                     </Modal>
                     
-                    <div>
+                    <div style={{width:"100%",display:"flex",justifyContent:"flex-end"}}>
+                        <div>
                         <Button 
                             className="main__header__btn" 
                             style={{backgroundColor: "var(--color-primary)",margin:"5px",color:"white"}}
@@ -389,6 +425,7 @@ function Main() {
                         >
                             Summarize
                         </Button>
+                        </div>
                     </div>
                 </div>  
 

@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import { registerApi,loginApi,secureRequest } from './functions'
 import { CLIENT_URL } from '../../const'
+import { Redirect } from 'react-router-dom';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -78,6 +79,7 @@ export default function Auth() {
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
 
   const handleSubmit = async (e) => {
       e.preventDefault()
@@ -94,6 +96,9 @@ export default function Auth() {
         const token = response.data.token || 'NA'
         console.log(token)
         localStorage.setItem('token',token)
+        if(token){
+          setRedirect(true)
+        }
       }
       else{
         response = await registerApi(data)
@@ -101,7 +106,11 @@ export default function Auth() {
 
     // response = await secureRequest()
     // console.log(response)
-    alert(JSON.stringify(response))
+    // alert(JSON.stringify(response))
+  }
+
+  if(redirect){
+    return <Redirect to='/'/>;
   }
 
   return (
