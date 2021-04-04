@@ -1,6 +1,6 @@
 <h1 align = 'center'> Qgen </h1>
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[![](https://img.shields.io/badge/Made_with-ReactJs-blue?style=for-the-badge&logo=ReactJs)](https://www.djangoproject.com/) 
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[![](https://img.shields.io/badge/Made_with-ReactJs-blue?style=for-the-badge&logo=ReactJs)](https://www.djangoproject.com/) 
 &emsp;
 [![](https://img.shields.io/badge/IDE-Visual_Studio_Code-blue?style=for-the-badge&logo=visual-studio-code)](https://code.visualstudio.com/ "Visual Studio Code")
 &emsp;
