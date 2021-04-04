@@ -68,11 +68,68 @@ function Main() {
     const [openQuizForm, setOpenQuizForm] = useState(false)
     const [showQuizPage, setShowQuizPage] = useState([]) // [selectedNote,noOfQuestions,fib,mcq,tf]
 
+    async function getFlashCards(){
+        // request here to get cards
+        let result = await axios.post(`${CLIENT_URL}/api/get_flashcards`,
+        {
+            number_of_flashcards : 7,  
+            note_id : selectedNote.id,                                                       
+        }, 
+        {
+            headers:{
+              'Authorization':''+localStorage.token,
+            }
+        })
+        console.log(result)
+
+        const card_array = [
+            {
+                "antonyms": [
+                    "fail",
+                    "reject",
+                    "disapprove",
+                    "pass"
+                ],
+                "meaning": {
+                    "Noun": [
+                        "someone chosen to judge and decide a disputed issue"
+                    ]
+                },
+                "synonyms": [
+                    "arbiter",
+                    "judge",
+                    "third party",
+                    "evaluator"
+                ],
+                "word": "arbitrators"
+            },
+            {
+                "antonyms": [
+                    "civilian",
+                    "nonworker"
+                ],
+                "meaning": {
+                    "Noun": [
+                        "a person responsible for the editorial aspects of publication; the person who determines the final content of a text (especially of a newspaper or magazine",
+                        "(computer science"
+                    ]
+                },
+                "synonyms": [
+                    "skilled workman",
+                    "text editor",
+                    "reviser",
+                    "skilled worker"
+                ],
+                "word": "editors"
+            }]
+    
+        setCards(result.data.data)
+    }
     useEffect(() => {
         //
         axios.post(`${CLIENT_URL}/api/get_notes`,
             {
-                user_id : JSON.parse(localStorage.user)[0].id                                                        
+                user_id : JSON.parse(localStorage.user)[0].id                                                      
             }, 
             {
                 headers:{
@@ -87,70 +144,6 @@ function Main() {
             return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
             });
 
-            async function getFlashCards(){
-                // request here to get cards
-                axios.post(`${CLIENT_URL}/api/get_notes`,
-                {
-                    user_id : JSON.parse(localStorage.user)[0].id,
-                    number_of_flashcards : 7                                                       
-                }, 
-                {
-                    headers:{
-                    'Authorization':''+localStorage.token,
-                    }
-                })
-                .then(response =>{
-                setNotes(response.data.data);                
-                return ({status : 'Success' ,message:"Document has been delivered"})
-                })
-                .catch(err =>{
-                return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
-                });
-
-                const card_array = [
-                    {
-                        "antonyms": [
-                            "fail",
-                            "reject",
-                            "disapprove",
-                            "pass"
-                        ],
-                        "meaning": {
-                            "Noun": [
-                                "someone chosen to judge and decide a disputed issue"
-                            ]
-                        },
-                        "synonyms": [
-                            "arbiter",
-                            "judge",
-                            "third party",
-                            "evaluator"
-                        ],
-                        "word": "arbitrators"
-                    },
-                    {
-                        "antonyms": [
-                            "civilian",
-                            "nonworker"
-                        ],
-                        "meaning": {
-                            "Noun": [
-                                "a person responsible for the editorial aspects of publication; the person who determines the final content of a text (especially of a newspaper or magazine",
-                                "(computer science"
-                            ]
-                        },
-                        "synonyms": [
-                            "skilled workman",
-                            "text editor",
-                            "reviser",
-                            "skilled worker"
-                        ],
-                        "word": "editors"
-                    }]
-            
-                setCards(card_array)
-            }
-            getFlashCards()
         }, [])
         // getNotes()
 
@@ -266,14 +259,26 @@ function Main() {
     }
 
 
-    const generateSummary = () => {
+     const generateSummary = async() => {
         // send axios req here
-        const summaryResponse = 'akjsd amwend  ndend we dwne dnwe nwe dwnb ed wn ednwb efn be fwebf'
+        let result = await axios.post(`${CLIENT_URL}/api/get_summary`,
+        {
+            note_id : selectedNote.id,                                                       
+        }, 
+        {
+            headers:{
+              'Authorization':''+localStorage.token,
+            }
+        })
+
+
+        // const summaryResponse = 'akjsd amwend  ndend we dwne dnwe nwe dwnb ed wn ednwb efn be fwebf'
         setSummaryOpen(true)
-        setSummaryContent(summaryResponse)
+        setSummaryContent(result.data.data)
     }
     
     const handleOpen = () => {
+        getFlashCards()
         setOpen(true);
     };
 
@@ -321,7 +326,7 @@ function Main() {
                         <MenuIcon />
                     </div>
                     <div className="main__header__title">
-                        MyCoolNotesApp
+                        Qgen 
                     </div>
                     <IconButton aria-label="UploadIcon">
                         <form>
@@ -334,7 +339,7 @@ function Main() {
                 <div className="main__searchBar">
                     {/* <input class="searchBar" type="search" id="searchbar" placeholder="Search" /> */}
 
-                    <TextField
+                    {/* <TextField
                         label="With normal TextField"
                         variant="filled"
                         className="searchBar"
@@ -347,7 +352,7 @@ function Main() {
                             </InputAdornment>
                             )
                         }}
-                    />
+                    /> */}
                 </div>
 
                 <div>
@@ -372,7 +377,7 @@ function Main() {
                                     }}
                                     style={{
                                         position:"relative",
-                                        backgroundColor:selectedNote && selectedNote.id == data.id ? "var(--color-primary)" : null
+                                        backgroundColor:selectedNote && selectedNote.id == data.id ? null : null
                                     }}
                                 >
                             <div className="main__list-item main__item__selected" >
