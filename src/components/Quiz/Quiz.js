@@ -9,6 +9,12 @@ function Quiz(props) {
     const [showResult, setShowResult] = useState(false)
 
     useEffect(() => {
+
+        if(props.questionsFetached.length > 0){
+            setQuestions(props.questionsFetached)
+            return   
+        }
+
         // Based on below data generate and retrieve question-answers from database
         // props.showQuizPage => [selectedNote,noOfQuestions,fib,mcq,tf]
         console.log(props.showQuizPage)
