@@ -83,8 +83,26 @@ function Main() {
             return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
             });
 
-            function getFlashCards(){
+            async function getFlashCards(){
                 // request here to get cards
+                axios.post(`${CLIENT_URL}/api/get_notes`,
+                {
+                    user_id : JSON.parse(localStorage.user)[0].id,
+                    number_of_flashcards : 7                                                       
+                }, 
+                {
+                    headers:{
+                    'Authorization':''+localStorage.token,
+                    }
+                })
+                .then(response =>{
+                setNotes(response.data.data);                
+                return ({status : 'Success' ,message:"Document has been delivered"})
+                })
+                .catch(err =>{
+                return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
+                });
+
                 const card_array = [
                     {
                         "antonyms": [
