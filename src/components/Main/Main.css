@@ -37,8 +37,19 @@
 .main__right__buttons{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 5%;
+    /* justify-content: space-between; */
+    /* margin-bottom: 5%; */
+}
+
+.main__right__icons{
+    /* position: absolute; */
+    /* display: inline-flex; */
+    /* float: right; */
+    flex-direction: row;
+    justify-content: flex-end;
+    /* justifyContent: 'flex-end'; */
+    text-align: right;
+    margin: 15px!important;
 }
 
 .main__header{
@@ -129,7 +140,18 @@
 
 .card__modal{
     box-shadow: 0 0 5px 5px gray!important;
-    border-radius: 20px!important;
+    border-radius: 30px!important;
     min-width: 250px!important;
     min-height: 50px!important;
+}
+
+.card__container{
+    min-width: 250px!important;
+    min-height: 50px!important;
+}
+
+.text_container{
+    size: 40px;
+    margin: 0%!important;
+    padding: 0%!important;
 }

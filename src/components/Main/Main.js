@@ -10,7 +10,7 @@ import EdiText from 'react-editext'
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
+import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card';
@@ -18,6 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { MicNone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -27,10 +28,18 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
       boxShadow: theme.shadows[5],
+      borderRadius: "20px",
       padding: theme.spacing(2, 4, 3),
+      outline:"none",
+      minHeight: "450px",
+      minWidth: "200px",
     },
+    root: {
+        '& > *': {
+          marginTop: theme.spacing(2),
+        },
+      },
   }));
 
 function Main() {
@@ -42,7 +51,8 @@ function Main() {
     const [titleValue, settitleValue] = useState('Enter title')
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
+    const [pages, setCards] = React.useState([]);
+  
     useEffect(() => {
         //
         function getNotes(){
@@ -68,6 +78,25 @@ function Main() {
             setNotes(notes_array)
         }
         getNotes()
+
+        function getFlashCards(){
+            // request here to get cards
+            const card_array = [
+                {
+                    "page_index":1,
+                    "word":"Mechanics",
+                    "meaning":"Study of physicd Study of physicd Study of physicd Study of physicd Study of physicd"
+                },
+                {
+                    "page_index":2,
+                    "word":"Software",
+                    "meaning":"Study of Computer"
+                }
+            ]
+        
+            setCards(card_array)
+        }
+        getFlashCards()
     }, [])
 
     function saveNote(){
@@ -100,7 +129,11 @@ function Main() {
         setNotes([new_note,...notes])
     }
 
-   
+    const handleChangeforPage = (event, value) => {
+        console.log(value);
+        setCards(value);
+    }
+
     const handleChange = (e, editor) => {
         const data = editor.getData();
         setVal(data);
@@ -197,14 +230,15 @@ function Main() {
 
             <div className="main__right" >
                 
-                <div className="main__right__buttons">
-                    <IconButton aria-label="delete">
+                <div className="main__right__buttons" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <IconButton aria-label="delete" style={{float:"left!important", marginRight:"300px"}}>
                         <DeleteIcon />
                     </IconButton>
-                    <div className="container">
+                    <div className="text_container" style={{ marginLeft:"300px!important", marginRight:"300px!important" }}>
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
-                    <Button type="button" onClick={handleOpen} variant="contained" color="primary" className="main__right__flashcard">
+                    <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button type="button" onClick={handleOpen} variant="contained" color="primary" className="main__right__icons">
                         Flashcards
                     </Button>
                     <Modal
@@ -220,29 +254,42 @@ function Main() {
                         }}
                     >
                         <Fade in={open}>
-                            <div className={classes.paper} style={ {borderRadius:"10px",  backgroundColor:"white", overflow:"hidden" }} >
-                                <div onClick={handleClose} style={{position:"absolute", top:"100px", right:"100px"}}>
+                            <div className={classes.paper} style={ {borderRadius:"20px", minWidth:"400px", maxWidth:"400px", backgroundColor:"white", overflow:"hidden" }} >
+                                <div onClick={handleClose} style={{float:"right", top:"10px", right:"10px"}}>
                                     <CancelIcon fontSize="large" />
                                 </div>
-                                <h2 id="transition-modal-title">Flashcards</h2>
+                                <br></br>
+                                <h1 id="transition-modal-title">Flashcards</h1>
                                 <p id="transition-modal-description">The perfect flashes for your last minute revision</p>
                                 <br></br>
-                                <Card className="card__modal">
-                                    <CardContent>
-                                    Hii
-                                    Hii
-                                    Hii
-                                    </CardContent>
-                                </Card>
+                                <br></br>
+                                <div className="card__container">
+                                    {pages.map(data => {
+                                        return <div>
+                                        <Card className="card__modal">
+                                            <CardContent>
+                                            <h3 >{ data.word }</h3>
+                                            <br></br>
+                                            { data.meaning }
+                                            </CardContent>
+                                        </Card>
+                                        <br></br>
+                                    </div>}
+                                   )}
+                                   <div className={classes.root} style={{textAlign:"center"}}>
+                                            <Pagination count={pages.length} color="primary" page={1} onChange={handleChangeforPage} />
+                                    </div>
+                                </div>
                             </div>
                         </Fade>
                     </Modal>
-                    <Button variant="contained" color="primary" className="main__right__quiz">
+                    <Button variant="contained" color="primary" className="main__right__icons">
                         Quiz
                     </Button>
-                    <Button variant="contained" color="primary" className="main__right__quiz">
+                    <Button variant="contained" color="primary" className="main__right__icons">
                         Summarize
                     </Button>
+                    </div>
                 </div>  
 
                 <div style={{ position:"relative"  }}>
