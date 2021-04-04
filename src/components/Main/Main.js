@@ -70,6 +70,12 @@ function Main() {
             .catch(err =>{
             return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
             });
+
+        if(fetched_notes.length > 0){
+            setSelectedNote(notes[0])
+            setVal(notes[0].content)
+            settitleValue(notes[0].note_title)
+        }
     }, [])
 
     async function saveNote() {
@@ -280,9 +286,6 @@ function Main() {
             <div className="main__right" >
                 
                 <div className="main__right__buttons">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
                     <div className="container">
                         <EdiText type="text" value={titleValue} onSave={handleSave} />
                     </div>
