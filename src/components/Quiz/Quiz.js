@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Quiz.css'
 import CancelIcon from '@material-ui/icons/Cancel';
 import axios from 'axios';
-
+import { CLIENT_URL } from '../../const'
 function Quiz(props) {
 
     const [questions, setQuestions] = useState([])
@@ -16,7 +16,7 @@ function Quiz(props) {
         
         async function getQuestions(){
             // request here
-            let result = await axios.post(`http://localhost:8000/api/get_questions`,
+            let result = await axios.post(`${CLIENT_URL}/api/get_questions`,
                 {
                     note_id : props.showQuizPage[0].id,
                     number_of_questions : props.showQuizPage[1],

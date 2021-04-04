@@ -23,7 +23,7 @@ import Fade from '@material-ui/core/Fade';
 import { MicNone } from '@material-ui/icons';
 import CustomModal from '../CustomModal/CustomModal';
 import Quiz from '../Quiz/Quiz';
-
+import { CLIENT_URL } from '../../const'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +66,7 @@ function Main() {
 
     useEffect(() => {
         //
-        axios.post('http://localhost:8000/api/get_notes',
+        axios.post(`${CLIENT_URL}/api/get_notes`,
             {
                 user_id : JSON.parse(localStorage.user)[0].id                                                        
             }, 
@@ -127,7 +127,7 @@ function Main() {
             return n
         })
         let n = updated_note;
-        let result = await axios.post(`http://localhost:8000/api/update_note`,
+        let result = await axios.post(`${CLIENT_URL}/api/update_note`,
                 {
                     note_id : n.id,
                     note_title : n.note_title,
@@ -138,7 +138,7 @@ function Main() {
                       'Authorization':''+localStorage.token,
                     }
                 })
-        result = await axios.post(`http://localhost:8000/api/get_notes`,
+        result = await axios.post(`${CLIENT_URL}/api/get_notes`,
 
             {
                 user_id : JSON.parse(localStorage.user)[0].id                                                        
@@ -153,7 +153,7 @@ function Main() {
 
     async function addNote(){
         // save data to db and get new note in return
-        let result = await axios.post(`http://localhost:8000/api/put_note`,
+        let result = await axios.post(`${CLIENT_URL}/api/put_note`,
                 {
                     user_id : JSON.parse(localStorage.user)[0].id,
                     note_title : 'Dummy title',
@@ -164,7 +164,7 @@ function Main() {
                       'Authorization':''+localStorage.token,
                     }
                 })
-            result = await axios.post(`http://localhost:8000/api/get_notes`,
+            result = await axios.post(`${CLIENT_URL}/api/get_notes`,
 
             {
                 user_id : JSON.parse(localStorage.user)[0].id                                                        
@@ -202,7 +202,7 @@ function Main() {
         
         // Add form data here properly and access it by name of "file" in backend
         axios
-            .post('http://localhost:8000/api/get_image_content', formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
+            .post('${CLIENT_URL}/api/get_image_content', formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
             .then((res) => {
                 alert("File Upload success");
             })

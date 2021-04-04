@@ -1,1 +1,1 @@
-export const CLIENT_URL = "http://127.0.0.1:8000"
+export const CLIENT_URL = "https://dc5d75fb6e73.ngrok.io"
