@@ -94,14 +94,14 @@ function Quiz(props) {
                 }
             ]
 
-            setQuestions(questions_array)
+            setQuestions(result.data.data)
         }
         getQuestions()
     }, [])
 
     function markAnswer(q,optn,j){
         let updated_list = questions.map((obj) => {
-            if(obj.id == q.id){
+            if(obj.id === q.id){
                 obj = {
                     ...obj,
                     marked_answer : optn
@@ -117,7 +117,7 @@ function Quiz(props) {
         setShowResult(true)
         console.log(questions)
         for(var i=0;i<questions.length;i++){
-            if(questions[i].correct_answer == questions[i].marked_answer){
+            if(questions[i].correct_answer === questions[i].marked_answer){
                 score = score + 1
                 console.log('rightttttttt ans')
             }
@@ -179,14 +179,14 @@ function Quiz(props) {
                                 {q.options.map((optn,j) => {
                                     let str_class=""
                                   
-                                    if(optn == q.marked_answer){
+                                    if(optn === q.marked_answer){
                                         str_class = str_class + "quiz__grid__item quiz__option__selected "
                                      }
                                      else{
                                         str_class = str_class + "quiz__grid__item "
                                     }
 
-                                    if (optn == q.correct_answer  && showResult) 
+                                    if (optn === q.correct_answer  && showResult) 
                                     { 
                                         str_class = str_class+ "quiz__option quiz__option__green "
                                     }
