@@ -40,6 +40,10 @@
     align-items: center;
 }
 
+.quiz__option__green{
+    background-color: green;
+}
+
 .quiz__option__text{
     margin-left: 10px;
 }
