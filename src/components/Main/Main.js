@@ -71,11 +71,11 @@ function Main() {
             return ({status : 'fail' ,message:"Unable to retreive document!",error:err})
             });
 
-        if(fetched_notes.length > 0){
-            setSelectedNote(notes[0])
-            setVal(notes[0].content)
-            settitleValue(notes[0].note_title)
-        }
+        // if(fetched_notes.length > 0){
+        //     setSelectedNote(notes[0])
+        //     setVal(notes[0].content)
+        //     settitleValue(notes[0].note_title)
+        // }
     }, [])
 
     async function saveNote() {
