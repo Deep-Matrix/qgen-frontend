@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import './Quiz.css'
+import CancelIcon from '@material-ui/icons/Cancel';
+import axios from 'axios';
 
-function Quiz() {
+function Quiz(props) {
 
     const [questions, setQuestions] = useState([])
+    const [showResult, setShowResult] = useState(false)
 
     useEffect(() => {
-        //
-        function getQuestions(){
+        // Based on below data generate and retrieve question-answers from database
+        // props.showQuizPage => [selectedNote,noOfQuestions,fib,mcq,tf]
+        console.log(props.showQuizPage)
+
+        
+        async function getQuestions(){
             // request here
+            let result = await axios.post(`http://localhost:8000/api/get_questions`,
+                {
+                    note_id : props.showQuizPage[0].id,
+                    number_of_questions : props.showQuizPage[1],
+                    types_of_questions : [props.showQuizPage[2], props.showQuizPage[3], props.showQuizPage[4]]                                                       
+                }, 
+                {
+                    headers:{
+                      'Authorization':''+localStorage.token,
+                    }
+                })
             const questions_array =[
                 {
                     "id":"1",
@@ -96,6 +114,7 @@ function Quiz() {
 
     function evaluate(){
         let score = 0 
+        setShowResult(true)
         console.log(questions)
         for(var i=0;i<questions.length;i++){
             if(questions[i].correct_answer == questions[i].marked_answer){
@@ -139,7 +158,9 @@ function Quiz() {
             </div>
 
 
-
+            <div style={{position:"absolute",top:"10px",right:"10px"}}>
+                <CancelIcon style={{cursor:"pointer"}} onClick={() => props.setShowQuizPage(false)} fontSize="large"/>
+            </div>
 
             <div style={{
                 // boxShadow:"0 0 2 2 #000000"
@@ -156,10 +177,27 @@ function Quiz() {
 
                             <div className="quiz__options">
                                 {q.options.map((optn,j) => {
+                                    let str_class=""
+                                  
+                                    if(optn == q.marked_answer){
+                                        str_class = str_class + "quiz__grid__item quiz__option__selected "
+                                     }
+                                     else{
+                                        str_class = str_class + "quiz__grid__item "
+                                    }
+
+                                    if (optn == q.correct_answer  && showResult) 
+                                    { 
+                                        str_class = str_class+ "quiz__option quiz__option__green "
+                                    }
+                                    else{
+                                        str_class = str_class + "quiz__option "
+                                    }  
+
                                     return <div className="quiz__option">
                                         <button 
                                             onClick={() => markAnswer(q,optn,j)}
-                                            className={optn == q.marked_answer ? "quiz__grid__item quiz__option__selected" : "quiz__grid__item"}>
+                                            className={str_class}>
                                             <div style={{width:"15px"}}>
                                                 {j+1}
                                             </div>

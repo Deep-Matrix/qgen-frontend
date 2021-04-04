@@ -16,7 +16,9 @@ export const loginApi = async(data)=> {
         email_id : data.email,
         password : data.password,
     })
-
+    // JSON.stringify, JSON.parse
+    localStorage.setItem('user', JSON.stringify(result.data.user))
+    localStorage.setItem('token', result.data.token)
     return result
 }
 

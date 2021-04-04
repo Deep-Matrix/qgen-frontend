@@ -155,3 +155,21 @@
     margin: 0%!important;
     padding: 0%!important;
 }
+.main__header__btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 5px 10px;
+    margin: 1rem 1rem 0 0;
+    height: 2.5rem;
+    /* width: 5rem; */
+    border-radius: 25px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .36s ease;
+    border: none;
+    outline: none;
+}
