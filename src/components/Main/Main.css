@@ -139,15 +139,18 @@
 }
 
 .card__modal{
-    box-shadow: 0 0 5px 5px gray!important;
+    box-shadow:  0px 0px 3px 3px rgba(68, 68, 68, 0.6);
+    /* 0 0 5px 5px gray!important; */
     border-radius: 30px!important;
     min-width: 250px!important;
     min-height: 50px!important;
 }
 
 .card__container{
-    min-width: 250px!important;
-    min-height: 50px!important;
+    /* min-width: 60% !important; */
+    /* min-height: 80vh !important; */
+    height: 100%;
+    overflow-y: auto;
 }
 
 .text_container{
