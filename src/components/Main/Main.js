@@ -230,7 +230,7 @@ function Main() {
         
         // Add form data here properly and access it by name of "file" in backend
         axios
-            .post('${CLIENT_URL}/api/get_image_content', formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
+            .post(`${CLIENT_URL}/api/get_image_content`, formData,  { headers: { 'Content-Type': 'multipart/form-data', 'Authorization':''+localStorage.token, } })
             .then((res) => {
                 alert("File Upload success");
             })
